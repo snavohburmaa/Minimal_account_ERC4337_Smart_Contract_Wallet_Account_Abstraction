@@ -8,18 +8,15 @@ import {console2} from "forge-std/console2.sol";
 
 contract DeployMinimal is Script {
     function run() public {
-        deployMinimalAccount();
+        (, MinimalAccount minimalAccount) = deployMinimalAccount();
+        console2.log("MinimalAccount deployed to:", address(minimalAccount));
     }
 
     function deployMinimalAccount() public returns(HelperConfig, MinimalAccount) {
         HelperConfig helperConfig = new HelperConfig();
         HelperConfig.NetworkConfig memory config = helperConfig.getConfig();
 
-        // Check which wallets are available - should include the one from --private-key
-        // address[] memory wallets = vm.getWallets();
-        // console2.log("Available wallets count:", wallets.length);
-       
-        vm.startBroadcast(config.account);
+        vm.startBroadcast();
         MinimalAccount minimalAccount = new MinimalAccount(config.entryPoint);
         minimalAccount.transferOwnership(config.account);
         vm.stopBroadcast();

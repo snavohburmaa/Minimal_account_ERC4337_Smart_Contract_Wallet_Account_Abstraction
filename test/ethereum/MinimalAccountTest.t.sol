@@ -47,7 +47,7 @@ contract MinimalAccountTest is Test {
             address(minimalAccount), AMOUNT);
 
         vm.prank(minimalAccount.owner());
-        minimalAccount.excute(dest, value, functionData);
+        minimalAccount.execute(dest, value, functionData);
 
         assertEq(usdc.balanceOf(address(minimalAccount)), AMOUNT);
     }
@@ -61,7 +61,7 @@ contract MinimalAccountTest is Test {
 
         vm.prank(NotOwner);
         vm.expectRevert(MinimalAccount.MinimalAccount__NotFromEntryPointOrOwner.selector);
-        minimalAccount.excute(dest, value, functionData);
+        minimalAccount.execute(dest, value, functionData);
     }
 
 //---------------------------TESTS SIGN USER OP -----------------------------// 
@@ -75,7 +75,7 @@ contract MinimalAccountTest is Test {
             address(minimalAccount), AMOUNT);
 
         bytes memory executeCallData = 
-            abi.encodeWithSelector(MinimalAccount.excute.selector, dest, value, functionData);
+            abi.encodeWithSelector(MinimalAccount.execute.selector, dest, value, functionData);
 
         PackedUserOperation memory packedUserOp = sendPackedUserOp.generateSignedUserOperation(
             executeCallData,
@@ -105,7 +105,7 @@ contract MinimalAccountTest is Test {
             address(minimalAccount), AMOUNT);
 
         bytes memory executeCallData = 
-            abi.encodeWithSelector(MinimalAccount.excute.selector, dest, value, functionData);
+            abi.encodeWithSelector(MinimalAccount.execute.selector, dest, value, functionData);
 
         PackedUserOperation memory packedUserOp = sendPackedUserOp.generateSignedUserOperation(
             executeCallData,
@@ -136,7 +136,7 @@ contract MinimalAccountTest is Test {
              address(minimalAccount), AMOUNT);
  
          bytes memory executeCallData = 
-             abi.encodeWithSelector(MinimalAccount.excute.selector, dest, value, functionData);
+             abi.encodeWithSelector(MinimalAccount.execute.selector, dest, value, functionData);
  
          PackedUserOperation memory packedUserOp = sendPackedUserOp.generateSignedUserOperation(
              executeCallData,
